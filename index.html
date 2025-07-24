@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Data Manager</title>
+    <style>
+        .comment-box {
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .timestamp {
+            font-size: 0.8em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container">
+        <h2>Add New Comment</h2>
+        <form id="commentForm" method="POST" action="process.php">
+            <textarea name="comment" required></textarea><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="comments-container">
+        <!-- Comments will be loaded here -->
+    </div>
+
+    <script>
+        // Function to load comments
+        function loadComments() {
+            fetch('process.php')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('comments-container').innerHTML = data;
+                });
+        }
+
+        // Load comments when page loads
+        loadComments();
+
+        // Handle form submission
+        document.getElementById('commentForm').onsubmit = function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            
+            fetch('process.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                loadComments();
+                this.reset();
+            });
+        };
+    </script>
+</body>
+</html>

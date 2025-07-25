@@ -30,7 +30,7 @@
     <script>
         // Function to load comments
         function loadComments() {
-            fetch('https://backendsample1.kesug.com/')
+            fetch('index.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('comments-container').innerHTML = data;
@@ -45,7 +45,7 @@
             e.preventDefault();
             const formData = new FormData(this);
             
-            fetch('https://backendsample1.kesug.com/', {
+            fetch('index.php', {
                 method: 'POST',
                 body: formData
             })

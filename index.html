@@ -17,7 +17,7 @@
 <body>
     <div id="form-container">
         <h2>Add New Comment</h2>
-        <form id="commentForm" method="POST">
+        <form id="commentForm" method="POST" action="https://backendsample1.kesug.com/process.php">
             <textarea name="comment" required></textarea><br>
             <button type="submit">Submit</button>
         </form>
@@ -28,26 +28,13 @@
     </div>
 
     <script>
-        const API_URL = 'https://backendsample1.kesug.com/';
-
         // Function to load comments
         function loadComments() {
-            fetch(API_URL, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('comments-container').innerHTML = data;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('comments-container').innerHTML = 
-                    '<p>Error loading comments. Please try again later.</p>';
-            });
+            fetch('https://backendsample1.kesug.com/process.php')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('comments-container').innerHTML = data;
+                });
         }
 
         // Load comments when page loads
@@ -58,19 +45,14 @@
             e.preventDefault();
             const formData = new FormData(this);
             
-            fetch(API_URL, {
+            fetch('https://backendsample1.kesug.com/process.php', {
                 method: 'POST',
-                credentials: 'include',
                 body: formData
             })
             .then(response => response.text())
             .then(data => {
                 loadComments();
                 this.reset();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error submitting comment. Please try again.');
             });
         };
     </script>

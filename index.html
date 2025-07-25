@@ -17,7 +17,7 @@
 <body>
     <div id="form-container">
         <h2>Add New Comment</h2>
-        <form id="commentForm" method="POST" action="process.php">
+        <form id="commentForm" method="POST" action="https://backendsample1.kesug.com/process.php">
             <textarea name="comment" required></textarea><br>
             <button type="submit">Submit</button>
         </form>
@@ -30,7 +30,7 @@
     <script>
         // Function to load comments
         function loadComments() {
-            fetch('process.php')
+            fetch('https://backendsample1.kesug.com/process.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('comments-container').innerHTML = data;
@@ -45,7 +45,7 @@
             e.preventDefault();
             const formData = new FormData(this);
             
-            fetch('process.php', {
+            fetch('https://backendsample1.kesug.com/process.php', {
                 method: 'POST',
                 body: formData
             })

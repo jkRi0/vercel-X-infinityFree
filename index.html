@@ -1,60 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Simple Data Manager</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Data Display</title>
     <style>
-        .comment-box {
-            margin: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-        .timestamp {
-            font-size: 0.8em;
-            color: #666;
-        }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background: #f2f2f2; }
     </style>
 </head>
 <body>
-    <div id="form-container">
-        <h2>Add New Comment</h2>
-        <form id="commentForm" method="POST" action="https://backendsample1.kesug.com/process.php">
-            <textarea name="comment" required></textarea><br>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
-
-    <div id="comments-container">
-        <!-- Comments will be loaded here -->
-    </div>
+    <h1>Database Data</h1>
+    <table id="dataTable"></table>
 
     <script>
-        // Function to load comments
-        function loadComments() {
-            fetch('https://backendsample1.kesug.com/process.php')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('comments-container').innerHTML = data;
-                });
-        }
-
-        // Load comments when page loads
-        loadComments();
-
-        // Handle form submission
-        document.getElementById('commentForm').onsubmit = function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            
-            fetch('https://backendsample1.kesug.com/process.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
+        fetch('http://localhost/sample-HTML%20and%20PHP/vercel-X-infinityFree/process.php')
+            .then(response => response.json())
             .then(data => {
-                loadComments();
-                this.reset();
+                if (data.length === 0) {
+                    document.getElementById('dataTable').innerHTML = '<tr><td>No data found</td></tr>';
+                    return;
+                }
+
+                const headers = Object.keys(data[0]);
+                let html = `<tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr>`;
+                
+                html += data.map(row => `
+                    <tr>${headers.map(key => `<td>${row[key]}</td>`).join('')}</tr>
+                `).join('');
+
+                document.getElementById('dataTable').innerHTML = html;
+            })
+            .catch(error => {
+                document.getElementById('dataTable').innerHTML = `<tr><td>Error: ${error.message}</td></tr>`;
+                console.log('Error fetching data:', error);
             });
-        };
     </script>
 </body>
 </html>

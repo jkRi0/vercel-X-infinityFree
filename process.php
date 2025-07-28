@@ -1,27 +1,13 @@
 <?php
+//sa = success add
+//fa = failed add
+//se = success edit
+//fe = failed edit
+//sd = success delete
+//fd = failed delete
+
 // Database connection
-$conn = mysqli_connect('localhost', 'root', '', 'backendsample1');
-if (!$conn) {
-    echo json_encode(['error' => 'Connection failed']);
-    exit;
-}
-
-
-//PHP TO JAVASCRIPT
-//USING OBJECT
-header("Content-Type: application/javascript");
-$try1="test";
-echo "var dataFromPHP = {'asd':'$try1'};";
-
-//USING ARRAY, retrieve comments from database
-echo "let phpComments = [];";
-$query = "SELECT * FROM comments";
-$result = mysqli_query($conn, $query);
-while ($row = mysqli_fetch_assoc($result)) {
-    $commentCol = $row['comment_text'];
-    echo "phpComments.push('$commentCol');";
-}
-
+include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $comment = $_POST['comment'] ?? '';
@@ -35,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             if (mysqli_query($conn, $query)) {
                 //DEVELOPMENT
-                header("location: http://127.0.0.1:5500/index.html");
+                // header("location: http://127.0.0.1:5500/index.html?sa=1");
 
                 //PRODUCTION
-                // header("location: https://vercel-x-infinity-free.vercel.app/");
+                header("location: https://vercel-x-infinity-free.vercel.app/?sa=1");
             } else {
                 echo json_encode(['error' => 'Failed to add comment: ' . mysqli_error($conn)]);
             }

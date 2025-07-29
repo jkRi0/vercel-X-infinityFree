@@ -40,6 +40,17 @@ echo $hex;
 $string = hex2bin($hex);
 echo "<br>".$string;
 
+//HEX TO DECIMAL AND SHIFT
+$string = 'Hello';
+$shiftedHex = '';
+for ($i = 0; $i < strlen($string); $i++) {
+    $char = $string[$i];
+    $ascii = ord($char);            // Get ASCII value
+    $shifted = $ascii + 5;          // Shift by 5
+    $hex = dechex($shifted);        // Convert to hex
+    $shiftedHex .= $hex;
+}
+echo $shiftedHex;  // Output: 4d6a717173
 
 
 

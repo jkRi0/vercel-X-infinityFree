@@ -3,10 +3,12 @@ $host = "localhost";
 $user = "root";
 $pass = "";
 $dbname = "backendsample1";
+try{
+    $conn = mysqli_connect($host,$user,$pass,$dbname);
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    echo '<script>console.log("Connected")</script>';
+}
+catch(mysqli_sql_exception){
+    echo '<script>console.log("Could not connect!")</script>';
 }
 ?>

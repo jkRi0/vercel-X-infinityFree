@@ -23,37 +23,51 @@
         <button type="submit">Send</button>
     </form>
 
-    <!-- SEND TO MIDDLE FILE -->
-    <script>
-        function sendData(event) {
-            event.preventDefault();
-            const comment = document.getElementById('commentInput').value;
-            const encodedComment = encodeURIComponent(comment);
-            const targetUrl = `https://backendsample1.kesug.com/test.html?comment=${encodedComment}`;
-            window.location.href = targetUrl;
-        }
-    </script>
+
+
+    <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+
+        <button type="submit">Submit</button>
+    </form>
+    <!-- External JS file -->
+    <script src="formHandler.js"></script>
     
-    <!-- SUCCESS MESSAGE AND PRINT -->
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const comment1 = params.get("comment");
-        const successMessage = params.get("sa");
-
-        if (successMessage && comment1) {
-            alert("Comment added successfully: " + comment1);
-            localStorage.setItem("recentComment", comment1); //set to localStorage
-
-            const baseUrl = window.location.origin + window.location.pathname;
-            window.location.replace(baseUrl);  // no history entry
-        } else {
-            const storedComment = localStorage.getItem("recentComment"); //get from localStorage
-
-            if (storedComment) {
-                document.body.innerHTML += `<p>Comment added:  ${storedComment}</p>`;
-                localStorage.removeItem("recentComment");   //remove from localStorage
-            }
-        }
-    </script>
 </body>
+<!-- SEND TO MIDDLE FILE -->
+<script>
+    function sendData(event) {
+        event.preventDefault();
+        const comment = document.getElementById('commentInput').value;
+        const encodedComment = encodeURIComponent(comment);
+        const targetUrl = `https://backendsample1.kesug.com/test.html?comment=${encodedComment}`;
+        window.location.href = targetUrl;
+    }
+</script>
+
+<!-- SUCCESS MESSAGE AND PRINT -->
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const comment1 = params.get("comment");
+    const successMessage = params.get("sa");
+
+    if (successMessage && comment1) {
+        alert("Comment added successfully: " + comment1);
+        localStorage.setItem("recentComment", comment1); //set to localStorage
+
+        const baseUrl = window.location.origin + window.location.pathname;
+        window.location.replace(baseUrl);  // no history entry
+    } else {
+        const storedComment = localStorage.getItem("recentComment"); //get from localStorage
+
+        if (storedComment) {
+            document.body.innerHTML += `<p>Comment added:  ${storedComment}</p>`;
+            localStorage.removeItem("recentComment");   //remove from localStorage
+        }
+    }
+</script>
 </html>

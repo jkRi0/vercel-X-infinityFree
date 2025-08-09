@@ -18,3 +18,14 @@ form.addEventListener('submit', function(event) {
     console.log("Form Data:", data);
     alert(`Name: ${data.name}\nEmail: ${data.email}`);
 });
+
+
+
+
+function sendData1(event) {
+    event.preventDefault();
+    const comment = document.getElementById('commentInput').value;
+    console.log("Comment:", comment);
+    
+    
+}
